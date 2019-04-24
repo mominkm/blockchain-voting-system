@@ -1,0 +1,167 @@
+/* Colors */
+$r: rgb(200,48,48);
+$rT: rgba(200,48,48,0);
+
+$y: rgb(240,208,0);
+
+$tnT: rgba(210,160,120,0);
+$tn: rgb(210,160,120);
+
+$pk: rgb(200,100,110);
+
+$bkT: rgba(0,0,0,0);
+$bk1: rgba(0,0,0,0.1);
+$bk2: rgba(0,0,0,0.2);
+$bk3: rgba(0,0,0,0.75);
+
+$gy: rgb(180,180,180);
+$dgy: rgb(30,30,30);
+$dgyT: rgba(30,30,30,0);
+
+$wT: rgba(255,255,255,0);
+$w1: rgba(255,255,255,0.2);
+$w2: rgba(255,255,255,0.6);
+
+/* Animation */
+$dur: 0.5s;
+	
+*, *:before, *:after {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+:root {
+	font-size: 30px;
+}
+body, input {
+	font: 1em "Titillium Web", sans-serif;
+	line-height: 1.5;
+}
+body {
+	background: url("https://s22.postimg.cc/gzyyouldd/grey-paper-texture.jpg") center top;
+	height: 100vh;
+	overflow: hidden;
+}
+form {
+	margin: 1.5em auto 0;
+	padding: 0.75em;
+	max-width: 320px;
+}
+label {
+	display: block;
+	margin-bottom: 1.5em;
+	-webkit-tap-highlight-color: transparent;
+}
+.cb {
+	box-shadow: 0 0 0 0.125em $bk3 inset;
+	display: inline-block;
+	position: relative;
+	width: 1.5em;
+	height: 1.5em;
+	vertical-align: middle;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	&:before, &:after {
+		content: "";
+		display: block;
+		position: absolute;
+	}
+	&:before {
+		animation: eraseA $dur steps(1) forwards;
+		background: 
+			url("https://s22.postimg.cc/fi4blx4gx/checkmark.png") 0 100% / 1.2em 1.35em no-repeat;
+		bottom: 0.2em;
+		left: 0.3em;
+		width: 0;
+		height: 1.35em;
+	}
+	&:after {
+	    animation: eraseB $dur linear forwards;
+		background:
+			/* eraser */
+			linear-gradient($w1 50%,$wT 50%) 11.2em 0,
+			linear-gradient($pk,$pk) 11.2em 0,
+			/* metal part */
+			linear-gradient(90deg,$w2,$w2 0.1em,$wT 0.1em,$wT 0.2em,$bk2 0.2em,$bk2 0.3em,$bkT 0.3em) 9.8em 0 / 0.3em 100%,
+			repeating-linear-gradient($w2,$w2 0.1em,$wT 0.1em,$wT 0.2em) 10.2em 0 / 0.5em 100%,
+			linear-gradient(90deg,$w2,$w2 0.1em,$wT 0.1em,$wT 0.2em,$bk2 0.2em,$bk2 0.3em,$bkT 0.3em) 10.8em 0 / 0.3em 100%,
+			linear-gradient($wT 35%,$w2 35%,$w2 65%,$wT 65%) 9.7em 0,
+			linear-gradient($gy,$gy) 9.7em 0,
+			/* yellow part */
+			linear-gradient($bk1 27%,$bkT 27%,$bkT 73%,$bk2 73%) 2em 0,
+			linear-gradient($y,$y) 2em 0,
+			/* lead */
+			linear-gradient(-14deg,$dgy 18%,$dgyT 20%) 0 0 / 0.5em 0.5em,
+			linear-gradient(14deg,$dgyT 80%,$dgy 83%) 0 0.5em / 0.5em 0.5em,
+			/* wooden part */
+			linear-gradient(-14deg,$tn 48%,$tnT 50%) 0 0 / 2em 0.5em,
+			linear-gradient(14deg,$bkT 48%,$bk1 50%) 0 0.5em / 2em 0.5em,
+			linear-gradient(14deg,$tnT 48%,$tn 50%) 0 0.5em / 2em 0.5em
+			;
+		background-repeat: no-repeat;
+		border-radius: 0 0.1em 0.1em 0;
+		opacity: 0;
+		visibility: hidden;
+		transform-origin: 0 0.25em;
+		width: 12em;
+		height: 1em;
+	}
+	&:checked {
+		background-color: transparent;
+		&:before {
+			animation: drawA $dur linear forwards;
+		}
+		&:after {
+			animation: drawB $dur linear;
+		}
+	}
+	&:focus {
+		outline: transparent;
+		+ span {
+			color: $bk3;
+			outline: transparent;
+		}
+	}
+}
+.pristine {
+	&:before, &:after {
+		animation: none;
+	}
+}
+
+@keyframes drawA {
+	from, 5% { width: 0; height: 1.35em; }
+	90%, to { width: 1.2em; height: 1.35em; }
+}
+@keyframes drawB {
+	from { opacity: 0; transform: translate(0em,-0.5em) rotate(-50deg); visibility: visible; }
+	5% { opacity: 1; transform: translate(0em,0.3em) rotate(-60deg); }
+	17% { transform: translate(0.25em,0.8em) rotate(-65deg); }
+	79% { transform: translate(1.1em,-0.14em) rotate(-63deg); }
+	90% { opacity: 1; transform: translate(1.2em,-0.15em) rotate(-63deg); }
+	to { opacity: 0; transform: translate(1.25em,-1.7em) rotate(-63deg); }
+}
+@keyframes eraseA {
+	from { width: 1.2em; height: 1.35em; }
+	10% { width: 1.2em; height: 1.08em; }
+	27% { width: 1.2em; height: 0.81em; }
+	36% { width: 1.2em; height: 0.7em; }
+	45% { width: 1.2em; height: 0.55em; }
+	55% { width: 1.2em; height: 0.35em; }
+	80%, to { width: 1.2em; height: 0; }
+}
+@keyframes eraseB {
+	from { opacity: 0; transform: translate(0.6em,-12.2em) rotate(90deg); visibility: visible; }
+	10% { opacity: 1; transform: translate(1.2em,-12.05em) rotate(90deg); }
+	20% { transform: translate(0.6em,-11.9em) rotate(90deg); }
+	30% { transform: translate(1.2em,-11.75em) rotate(90deg); }
+	40% { transform: translate(0.6em,-11.6em) rotate(90deg); }
+	50% { transform: translate(1.2em,-11.45em) rotate(90deg); }
+	60% { transform: translate(0.6em,-11.3em) rotate(90deg); }
+	70% { transform: translate(1.2em,-11.15em) rotate(90deg); }
+	80% { transform: translate(0.6em,-11em) rotate(90deg); }
+	90% { opacity: 1; transform: translate(2em,-12.5em) rotate(100deg); }
+	to { opacity: 0; transform: translate(2em,-12.5em) rotate(100deg); }
+}
+
